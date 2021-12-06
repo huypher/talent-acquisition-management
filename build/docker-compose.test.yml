@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: ..
+      args:
+        GITHUB_TOKEN: $GITHUB_TOKEN
+      dockerfile: build/test.Dockerfile
+    env_file: development.env
+    depends_on:
+      - db
+#      - redis
+
+  db:
+    image: postgres:9.6-alpine
+    env_file: development.env
+    logging:
+      driver: none
+
+#  redis:
+#    image: redis:5.0.7-alpine
+#    command: redis-server --requirepass password
+#    logging:
+#      driver: none
+
