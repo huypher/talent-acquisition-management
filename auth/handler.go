@@ -3,8 +3,8 @@ package auth
 import (
 	"errors"
 
-	"github.com/pghuy/dobi-oms/pkg/container"
-	httpresponse "github.com/pghuy/dobi-oms/pkg/http_response"
+	"github.com/pghuy/talent-acquistion-management/pkg/container"
+	httpresponse "github.com/pghuy/talent-acquistion-management/pkg/http_response"
 
 	"github.com/gin-gonic/gin"
 )

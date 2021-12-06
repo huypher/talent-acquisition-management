@@ -11,7 +11,7 @@ docker_build: deps build_linux
 
 PWD = $(shell pwd)
 
-MODULE = dobi-oms
+MODULE = talent-acquistion-management
 IMAGE_TAG ?= $(MODULE)
 GITHUB_SHA ?= $(MODULE)
 

@@ -4,9 +4,8 @@ import (
 	"errors"
 	"testing"
 
+	"github.com/pghuy/talent-acquistion-management/domain"
 	"github.com/stretchr/testify/require"
-
-	"github.com/pghuy/dobi-oms/domain"
 )
 
 func Test_genJWT(t *testing.T) {

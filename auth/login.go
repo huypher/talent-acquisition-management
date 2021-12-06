@@ -5,10 +5,10 @@ import (
 	"errors"
 	"time"
 
-	"github.com/pghuy/dobi-oms/domain"
 	"golang.org/x/crypto/bcrypt"
 
 	"github.com/dgrijalva/jwt-go"
+	"github.com/pghuy/talent-acquistion-management/domain"
 	"github.com/sirupsen/logrus"
 )
 

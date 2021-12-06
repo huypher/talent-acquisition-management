@@ -3,12 +3,10 @@ package talent
 import (
 	"net/http"
 
-	"github.com/pghuy/dobi-oms/auth"
-	"github.com/pghuy/dobi-oms/pkg/container"
-
-	"github.com/pghuy/dobi-oms/pkg/http_response"
-
 	"github.com/gin-gonic/gin"
+	"github.com/pghuy/talent-acquistion-management/auth"
+	"github.com/pghuy/talent-acquistion-management/pkg/container"
+	"github.com/pghuy/talent-acquistion-management/pkg/http_response"
 )
 
 func (d *talentDelivery) getUser() gin.HandlerFunc {

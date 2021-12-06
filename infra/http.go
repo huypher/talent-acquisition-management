@@ -3,11 +3,9 @@ package infra
 import (
 	"net/http"
 
-	"github.com/pghuy/dobi-oms/auth"
-
-	"github.com/pghuy/dobi-oms/domain"
-
 	healthcheck "github.com/RaMin0/gin-health-check"
+	"github.com/pghuy/talent-acquistion-management/auth"
+	"github.com/pghuy/talent-acquistion-management/domain"
 	"github.com/sirupsen/logrus"
 	ginlogrus "github.com/toorop/gin-logrus"
 

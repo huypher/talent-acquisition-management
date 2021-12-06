@@ -11,7 +11,7 @@ import (
 
 func NewPostgres(cfg *Config) (*bun.DB, func(), error) {
 
-	dsn := "postgres://dobi:dobi@host.docker.internal:5432/dobi-oms?sslmode=disable"
+	dsn := "postgres://dobi:dobi@host.docker.internal:5432/talent-acquistion-management?sslmode=disable"
 	sqldb := sql.OpenDB(pgdriver.NewConnector(pgdriver.WithDSN(dsn)))
 	db := bun.NewDB(sqldb, pgdialect.New())
 

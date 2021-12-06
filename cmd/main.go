@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 
-	"github.com/pghuy/dobi-oms/app"
+	"github.com/pghuy/talent-acquistion-management/app"
 )
 
 func main() {

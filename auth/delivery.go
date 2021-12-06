@@ -3,9 +3,8 @@ package auth
 import (
 	"net/http"
 
-	"github.com/pghuy/dobi-oms/domain"
-
 	"github.com/gin-gonic/gin"
+	"github.com/pghuy/talent-acquistion-management/domain"
 )
 
 const (

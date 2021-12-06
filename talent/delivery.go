@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/pghuy/dobi-oms/domain"
+	"github.com/pghuy/talent-acquistion-management/domain"
 )
 
 type talentDelivery struct {

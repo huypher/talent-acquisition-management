@@ -5,13 +5,12 @@ import (
 	"strings"
 	"time"
 
+	"github.com/pghuy/talent-acquistion-management/pkg/http_response"
 	"github.com/sirupsen/logrus"
 
 	"github.com/dgrijalva/jwt-go"
 
 	"github.com/gin-gonic/gin"
-
-	"github.com/pghuy/dobi-oms/pkg/http_response"
 )
 
 type header struct {

@@ -1,6 +1,6 @@
 FROM golang:1.16
 
-WORKDIR /dobi-oms
+WORKDIR /talent-acquistion-management
 
 COPY go.mod go.sum ./
 
