@@ -4,8 +4,10 @@ import (
 	"context"
 	"time"
 
+	"github.com/pghuy/talent-acquisition-management/pkg/container"
+
 	"github.com/gin-gonic/gin"
-	tam "github.com/pghuy/talent-acquistion-management"
+	tam "github.com/pghuy/talent-acquisition-management"
 )
 
 type Talent struct {
@@ -28,13 +30,13 @@ type Talent struct {
 }
 
 type TalentUsecase interface {
-	GetByUserName(ctx context.Context, username string) (*Talent, error)
 	GetByID(ctx context.Context, id int) (*Talent, error)
+	GetList(ctx context.Context, filter container.Map, pageID, perPage int) ([]Talent, error)
 }
 
 type TalentRepository interface {
-	GetByUserName(ctx context.Context, username string) (*Talent, error)
 	GetByID(ctx context.Context, id int) (*Talent, error)
+	GetList(ctx context.Context, filter container.Map, pageID, perPage int) ([]Talent, error)
 }
 
 type TalentDelivery interface {

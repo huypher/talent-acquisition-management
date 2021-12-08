@@ -1,23 +1,24 @@
 version: "3.8"
 services:
-  talent-acquistion-management:
+  talent-acquisition-management:
     build:
       context: ..
       dockerfile: ./build/Dockerfile
-    command: ["./build/wait-for-it.sh", "postgres:5432", "--", "./cli.bin",  "serve"]
+    command: ["./wait-for-it.sh", "postgres:5432", "--", "./cli.bin",  "serve"]
     ports:
      - "8080:8080"
     env_file:
       - "development.env"
     networks:
       - mynetwork
-  dobi-postgres:
+  postgres:
     image: postgres:13.3-alpine
-    container_name: postgres-dobi
+    container_name: tam-postgres
     restart: always
     volumes:
-      - ./postgres:/docker-entrypoint-initdb.d
-      - ./docker/db:/var/lib/postgres
+      - ../db/migrations:/migrations
+#      - ./postgres:/docker-entrypoint-initdb.d
+#      - ./docker/db:/var/lib/postgres
     env_file:
       - "development.env"
     ports:

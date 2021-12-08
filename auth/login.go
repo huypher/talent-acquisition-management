@@ -8,15 +8,15 @@ import (
 	"golang.org/x/crypto/bcrypt"
 
 	"github.com/dgrijalva/jwt-go"
-	"github.com/pghuy/talent-acquistion-management/domain"
+	"github.com/pghuy/talent-acquisition-management/domain"
 	"github.com/sirupsen/logrus"
 )
 
 type authUsecase struct {
-	userUsecase domain.TalentUsecase
+	userUsecase domain.UserUsecase
 }
 
-func NewAuthUsecase(userUsecase domain.TalentUsecase) *authUsecase {
+func NewAuthUsecase(userUsecase domain.UserUsecase) *authUsecase {
 	return &authUsecase{
 		userUsecase: userUsecase,
 	}
@@ -31,7 +31,7 @@ func (u *authUsecase) Login(ctx context.Context, username string, password strin
 	if err != nil {
 		return "", err
 	}
-	if user == (domain.Talent{}) {
+	if user == (domain.User{}) {
 		return "", NewInvalidUserNameError("invalid username")
 	}
 
@@ -49,7 +49,7 @@ func (u *authUsecase) Login(ctx context.Context, username string, password strin
 	return token, nil
 }
 
-func genJWT(acc *domain.Talent, secretJWT string) (string, error) {
+func genJWT(acc *domain.User, secretJWT string) (string, error) {
 	if acc == nil {
 		return "", errors.New("talent empty")
 	}

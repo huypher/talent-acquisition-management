@@ -3,7 +3,7 @@ package level
 import (
 	"context"
 
-	"github.com/pghuy/talent-acquistion-management/domain"
+	"github.com/pghuy/talent-acquisition-management/domain"
 )
 
 type levelUsecase struct {

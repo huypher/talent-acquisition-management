@@ -4,14 +4,14 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/pghuy/talent-acquistion-management/domain"
+	"github.com/pghuy/talent-acquisition-management/domain"
 	"github.com/stretchr/testify/require"
 )
 
 func Test_genJWT(t *testing.T) {
 	t.Parallel()
 
-	acc := &domain.Talent{
+	acc := &domain.User{
 		ID:       1,
 		UserName: "username",
 		Password: "password",
@@ -22,7 +22,7 @@ func Test_genJWT(t *testing.T) {
 
 	testCases := []struct {
 		name string
-		acc  *domain.Talent
+		acc  *domain.User
 		err  error
 	}{
 		{"test", acc, nil},

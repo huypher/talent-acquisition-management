@@ -21,14 +21,20 @@ func InitApplication(ctx context.Context) (*App, func(), error) {
 	if err != nil {
 		return nil, nil, err
 	}
+	userRepository, err := ProvideUserRepository(db)
+	if err != nil {
+		cleanup()
+		return nil, nil, err
+	}
+	userUsecase := ProvideUserUsecase(userRepository)
+	authUsecase := ProvideAuthUsecase(userUsecase)
+	authDelivery := ProvideAuthDelivery(authUsecase)
 	talentRepository, err := ProvideTalentRepository(db)
 	if err != nil {
 		cleanup()
 		return nil, nil, err
 	}
 	talentUsecase := ProvideTalentUsecase(talentRepository)
-	authUsecase := ProvideAuthUsecase(talentUsecase)
-	authDelivery := ProvideAuthDelivery(authUsecase)
 	talentDelivery := ProvideTalentDelivery(talentUsecase)
 	handler := ProvideHttpHandler(authDelivery, talentDelivery)
 	server := ProvideRestService(handler)

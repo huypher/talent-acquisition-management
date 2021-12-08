@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 
-	"github.com/pghuy/talent-acquistion-management/app"
+	"github.com/pghuy/talent-acquisition-management/app"
 )
 
 func main() {

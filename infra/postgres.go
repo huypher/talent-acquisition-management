@@ -1,21 +1,34 @@
 package infra
 
 import (
-	"database/sql"
-
 	_ "github.com/jackc/pgx/v4/stdlib"
-	"github.com/uptrace/bun"
-	"github.com/uptrace/bun/dialect/pgdialect"
-	"github.com/uptrace/bun/driver/pgdriver"
+	migration "github.com/pghuy/talent-acquisition-management/db"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
-func NewPostgres(cfg *Config) (*bun.DB, func(), error) {
+func NewPostgres(cfg *Config) (*gorm.DB, func(), error) {
+	databaseUrl := "postgres://tam:tam@postgres:5432/talent-acquisition-management?sslmode=disable"
+	sqldb := postgres.Open(databaseUrl)
+	db, err := gorm.Open(sqldb, &gorm.Config{})
 
-	dsn := "postgres://dobi:dobi@host.docker.internal:5432/talent-acquistion-management?sslmode=disable"
-	sqldb := sql.OpenDB(pgdriver.NewConnector(pgdriver.WithDSN(dsn)))
-	db := bun.NewDB(sqldb, pgdialect.New())
+	postgresInstance, err := db.DB()
+	if err != nil {
+		return nil, nil, err
+	}
+
+	if err := postgresInstance.Ping(); err != nil {
+		postgresInstance.Close()
+		return nil, nil, err
+	}
+
+	err = migration.MigrateUp(postgresInstance)
+	if err != nil {
+		postgresInstance.Close()
+		return nil, nil, err
+	}
 
 	return db, func() {
-		db.Close()
+		postgresInstance.Close()
 	}, nil
 }

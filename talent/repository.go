@@ -2,34 +2,37 @@ package talent
 
 import (
 	"context"
-	"database/sql"
+	"errors"
 	"time"
 
-	tam "github.com/pghuy/talent-acquistion-management"
+	"github.com/huypher/utils/container"
 
-	"github.com/pghuy/talent-acquistion-management/domain"
-	"github.com/uptrace/bun"
+	"gorm.io/gorm"
+
+	tam "github.com/pghuy/talent-acquisition-management"
+
+	"github.com/pghuy/talent-acquisition-management/domain"
 )
 
 type talent struct {
-	bun.BaseModel `bun:"users"`
+	gorm.Model `bun:"talents"`
 
-	ID                 int           `bun:"id"`
-	FullName           string        `bun:"full_name"`
-	Gender             string        `bun:"gender"`
-	YearOfBirth        string        `bun:"year_of_birth"`
-	Phone              string        `bun:"phone"`
-	Email              string        `bun:"email"`
-	AppliedPosition    string        `bun:"applied_position"`
-	Level              tam.LevelType `bun:"level"`
-	Department         string        `bun:"department"`
-	Project            string        `bun:"project"`
-	CV                 string        `bun:"cv"`
-	Criteria           string        `bun:"criteria"`
-	ScheduledInterview time.Time     `bun:"scheduled_interview"`
-	InterviewResult    string        `bun:"interview_result"`
-	CreatedAt          time.Time     `bun:"created_at"`
-	UpdatedAt          time.Time     `bun:"updated_at"`
+	ID                 int
+	FullName           string
+	Gender             string
+	YearOfBirth        string
+	Phone              string
+	Email              string
+	AppliedPosition    string
+	Level              tam.LevelType
+	Department         string
+	Project            string
+	CV                 string
+	Criteria           string
+	ScheduledInterview time.Time
+	InterviewResult    string
+	CreatedAt          time.Time
+	UpdatedAt          time.Time
 }
 
 func (t talent) ToModel() domain.Talent {
@@ -54,21 +57,20 @@ func (t talent) ToModel() domain.Talent {
 }
 
 type talentRepository struct {
-	db *bun.DB
+	db *gorm.DB
 }
 
-func NewTalentRepository(db *bun.DB) (*talentRepository, error) {
+func NewTalentRepository(db *gorm.DB) (*talentRepository, error) {
 	return &talentRepository{
 		db: db,
 	}, nil
 }
 
-func (r *talentRepository) GetByUserName(ctx context.Context, userName string) (*domain.Talent, error) {
+func (r *talentRepository) GetByID(ctx context.Context, id int) (*domain.Talent, error) {
 	m := talent{}
 
-	err := r.db.NewSelect().Model(&m).Where("username = ?", userName).Scan(ctx)
-	if err != nil {
-		if err == sql.ErrNoRows {
+	if err := r.db.WithContext(ctx).First(&m, id).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, nil
 		}
 		return nil, err
@@ -79,18 +81,27 @@ func (r *talentRepository) GetByUserName(ctx context.Context, userName string) (
 	return &talent, nil
 }
 
-func (r *talentRepository) GetByID(ctx context.Context, id int) (*domain.Talent, error) {
-	m := talent{}
+func (r *talentRepository) GetList(ctx context.Context, filter container.Map, pageID, perPage int) ([]domain.Talent, error) {
+	var m []talent
 
-	err := r.db.NewSelect().Model(&m).Where("id = ?", id).Scan(ctx)
-	if err != nil {
-		if err == sql.ErrNoRows {
+	q := r.db.Where(map[string]interface{}(filter))
+
+	if pageID > 0 && perPage > 0 {
+		offset := perPage * (pageID - 1)
+		q = q.Offset(offset).Limit(perPage)
+	}
+
+	if err := q.WithContext(ctx).Find(&m).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, nil
 		}
 		return nil, err
 	}
 
-	talent := m.ToModel()
+	talents := make([]domain.Talent, len(m))
+	for idx, t := range m {
+		talents[idx] = t.ToModel()
+	}
 
-	return &talent, nil
+	return talents, nil
 }

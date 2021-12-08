@@ -4,19 +4,19 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/pghuy/talent-acquistion-management/domain"
+	"github.com/pghuy/talent-acquisition-management/domain"
 )
 
 type talentDelivery struct {
-	userUsecase domain.TalentUsecase
+	talentUsecase domain.TalentUsecase
 }
 
 func NewTalentDelivery(userUsecase domain.TalentUsecase) *talentDelivery {
 	return &talentDelivery{
-		userUsecase: userUsecase,
+		talentUsecase: userUsecase,
 	}
 }
 
 func (d *talentDelivery) Handler(c *gin.RouterGroup) {
-	c.Handle(http.MethodGet, "/talent", d.getUser())
+	c.Handle(http.MethodGet, "/talents", d.getTalentList())
 }

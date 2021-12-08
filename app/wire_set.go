@@ -8,6 +8,10 @@ var set = wire.NewSet(
 	ProvideHttpHandler,
 	ProvideRestService,
 
+	ProvideUserRepository,
+	ProvideUserUsecase,
+	ProvideUserDelivery,
+
 	ProvideAuthDelivery,
 	ProvideAuthUsecase,
 

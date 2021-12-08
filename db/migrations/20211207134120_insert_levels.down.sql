@@ -1,0 +1,1 @@
+DELETE FROM levels WHERE code IN ('Junior', 'Middle', 'Senior', 'TechLead');

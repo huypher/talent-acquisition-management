@@ -3,19 +3,22 @@ package app
 import (
 	"net/http"
 
-	authDelivery "github.com/pghuy/talent-acquistion-management/auth"
-	"github.com/pghuy/talent-acquistion-management/domain"
-	"github.com/pghuy/talent-acquistion-management/infra"
-	"github.com/pghuy/talent-acquistion-management/level"
-	"github.com/pghuy/talent-acquistion-management/talent"
-	"github.com/uptrace/bun"
+	"gorm.io/gorm"
+
+	"github.com/pghuy/talent-acquisition-management/user"
+
+	authDelivery "github.com/pghuy/talent-acquisition-management/auth"
+	"github.com/pghuy/talent-acquisition-management/domain"
+	"github.com/pghuy/talent-acquisition-management/infra"
+	"github.com/pghuy/talent-acquisition-management/level"
+	"github.com/pghuy/talent-acquisition-management/talent"
 )
 
 func ProvideConfig() (*infra.Config, error) {
 	return infra.NewConfig()
 }
 
-func ProvidePostgres(cfg *infra.Config) (*bun.DB, func(), error) {
+func ProvidePostgres(cfg *infra.Config) (*gorm.DB, func(), error) {
 	return infra.NewPostgres(cfg)
 }
 
@@ -30,15 +33,27 @@ func ProvideRestService(httpHandler http.Handler) *http.Server {
 	return infra.NewRestService(httpHandler)
 }
 
+func ProvideUserRepository(db *gorm.DB) (domain.UserRepository, error) {
+	return user.NewUserRepository(db)
+}
+
+func ProvideUserUsecase(userRepository domain.UserRepository) domain.UserUsecase {
+	return user.NewUserUsecase(userRepository)
+}
+
+func ProvideUserDelivery(userUsecase domain.UserUsecase) domain.UserDelivery {
+	return user.NewProductDelivery(userUsecase)
+}
+
 func ProvideAuthDelivery(authUsecase domain.AuthUsecase) domain.AuthDelivery {
 	return authDelivery.NewAuthDelivery(authUsecase)
 }
 
-func ProvideAuthUsecase(userUsecase domain.TalentUsecase) domain.AuthUsecase {
+func ProvideAuthUsecase(userUsecase domain.UserUsecase) domain.AuthUsecase {
 	return authDelivery.NewAuthUsecase(userUsecase)
 }
 
-func ProvideTalentRepository(db *bun.DB) (domain.TalentRepository, error) {
+func ProvideTalentRepository(db *gorm.DB) (domain.TalentRepository, error) {
 	return talent.NewTalentRepository(db)
 }
 
@@ -50,7 +65,7 @@ func ProvideTalentDelivery(talentUsecase domain.TalentUsecase) domain.TalentDeli
 	return talent.NewTalentDelivery(talentUsecase)
 }
 
-func ProvideLevelRepository(db *bun.DB) (domain.LevelRepository, error) {
+func ProvideLevelRepository(db *gorm.DB) (domain.LevelRepository, error) {
 	return level.NewLevelRepository(db)
 }
 

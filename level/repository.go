@@ -4,17 +4,18 @@ import (
 	"context"
 	"database/sql"
 
-	tam "github.com/pghuy/talent-acquistion-management"
-	"github.com/pghuy/talent-acquistion-management/domain"
-	"github.com/uptrace/bun"
+	"gorm.io/gorm"
+
+	tam "github.com/pghuy/talent-acquisition-management"
+	"github.com/pghuy/talent-acquisition-management/domain"
 )
 
 type level struct {
-	bun.BaseModel `bun:"users"`
+	gorm.Model `bun:"levels"`
 
-	ID   int           `bun:"id"`
-	Code tam.LevelType `bun:"code"`
-	Name string        `bun:"name"`
+	ID   int
+	Code tam.LevelType
+	Name string
 }
 
 func (l level) ToModel() domain.Level {
@@ -26,10 +27,10 @@ func (l level) ToModel() domain.Level {
 }
 
 type levelRepository struct {
-	db *bun.DB
+	db *gorm.DB
 }
 
-func NewLevelRepository(db *bun.DB) (*levelRepository, error) {
+func NewLevelRepository(db *gorm.DB) (*levelRepository, error) {
 	return &levelRepository{
 		db: db,
 	}, nil
@@ -38,8 +39,7 @@ func NewLevelRepository(db *bun.DB) (*levelRepository, error) {
 func (r *levelRepository) GetAll(ctx context.Context) ([]domain.Level, error) {
 	m := []level{}
 
-	err := r.db.NewSelect().Model(&m).Scan(ctx)
-	if err != nil {
+	if err := r.db.WithContext(ctx).Find(&m).Error; err != nil {
 		if err == sql.ErrNoRows {
 			return nil, nil
 		}

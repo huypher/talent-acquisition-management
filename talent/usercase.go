@@ -3,7 +3,8 @@ package talent
 import (
 	"context"
 
-	"github.com/pghuy/talent-acquistion-management/domain"
+	"github.com/pghuy/talent-acquisition-management/domain"
+	"github.com/pghuy/talent-acquisition-management/pkg/container"
 )
 
 type talentUsecase struct {
@@ -16,10 +17,10 @@ func NewTalentUsecase(userRepository domain.TalentRepository) *talentUsecase {
 	}
 }
 
-func (u *talentUsecase) GetByUserName(ctx context.Context, userName string) (*domain.Talent, error) {
-	return u.talentRepository.GetByUserName(ctx, userName)
-}
-
 func (u *talentUsecase) GetByID(ctx context.Context, id int) (*domain.Talent, error) {
 	return u.talentRepository.GetByID(ctx, id)
+}
+
+func (u *talentUsecase) GetList(ctx context.Context, filter container.Map, pageID, perPage int) ([]domain.Talent, error) {
+	return u.talentRepository.GetList(ctx, filter, pageID, perPage)
 }
