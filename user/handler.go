@@ -1,19 +1,18 @@
 package user
 
 import (
-	"net/http"
+	"github.com/huypher/kit/container"
 
 	"github.com/gin-gonic/gin"
-	"github.com/pghuy/talent-acquisition-management/auth"
-	"github.com/pghuy/talent-acquisition-management/pkg/container"
-	"github.com/pghuy/talent-acquisition-management/pkg/http_response"
+	"github.com/huypher/kit/http_response"
+	"github.com/huypher/talent-acquisition-management/auth"
 )
 
 func (d *userDelivery) getUser() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		uid := auth.UIDFromContext(c)
 		if uid == (auth.UID{}) {
-			http_response.Response(c, http.StatusBadRequest, "invalid request", nil)
+			http_response.BadRequest(c, "invalid request", nil)
 			return
 		}
 

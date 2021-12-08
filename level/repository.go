@@ -6,8 +6,8 @@ import (
 
 	"gorm.io/gorm"
 
-	tam "github.com/pghuy/talent-acquisition-management"
-	"github.com/pghuy/talent-acquisition-management/domain"
+	tam "github.com/huypher/talent-acquisition-management"
+	"github.com/huypher/talent-acquisition-management/domain"
 )
 
 type level struct {

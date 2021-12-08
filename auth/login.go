@@ -8,7 +8,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 
 	"github.com/dgrijalva/jwt-go"
-	"github.com/pghuy/talent-acquisition-management/domain"
+	"github.com/huypher/talent-acquisition-management/domain"
 	"github.com/sirupsen/logrus"
 )
 

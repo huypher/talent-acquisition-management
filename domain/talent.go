@@ -4,10 +4,10 @@ import (
 	"context"
 	"time"
 
-	"github.com/pghuy/talent-acquisition-management/pkg/container"
+	"github.com/huypher/kit/container"
 
 	"github.com/gin-gonic/gin"
-	tam "github.com/pghuy/talent-acquisition-management"
+	tam "github.com/huypher/talent-acquisition-management"
 )
 
 type Talent struct {

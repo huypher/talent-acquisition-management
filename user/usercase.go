@@ -3,7 +3,7 @@ package user
 import (
 	"context"
 
-	"github.com/pghuy/talent-acquisition-management/domain"
+	"github.com/huypher/talent-acquisition-management/domain"
 )
 
 type userUsecase struct {

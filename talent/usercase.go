@@ -3,8 +3,9 @@ package talent
 import (
 	"context"
 
-	"github.com/pghuy/talent-acquisition-management/domain"
-	"github.com/pghuy/talent-acquisition-management/pkg/container"
+	"github.com/huypher/kit/container"
+
+	"github.com/huypher/talent-acquisition-management/domain"
 )
 
 type talentUsecase struct {

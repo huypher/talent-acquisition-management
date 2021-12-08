@@ -5,13 +5,13 @@ import (
 
 	"gorm.io/gorm"
 
-	"github.com/pghuy/talent-acquisition-management/user"
+	"github.com/huypher/talent-acquisition-management/user"
 
-	authDelivery "github.com/pghuy/talent-acquisition-management/auth"
-	"github.com/pghuy/talent-acquisition-management/domain"
-	"github.com/pghuy/talent-acquisition-management/infra"
-	"github.com/pghuy/talent-acquisition-management/level"
-	"github.com/pghuy/talent-acquisition-management/talent"
+	authDelivery "github.com/huypher/talent-acquisition-management/auth"
+	"github.com/huypher/talent-acquisition-management/domain"
+	"github.com/huypher/talent-acquisition-management/infra"
+	"github.com/huypher/talent-acquisition-management/level"
+	"github.com/huypher/talent-acquisition-management/talent"
 )
 
 func ProvideConfig() (*infra.Config, error) {

@@ -4,7 +4,7 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/pghuy/talent-acquisition-management/domain"
+	"github.com/huypher/talent-acquisition-management/domain"
 	"github.com/stretchr/testify/require"
 )
 

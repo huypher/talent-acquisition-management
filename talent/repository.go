@@ -5,13 +5,13 @@ import (
 	"errors"
 	"time"
 
-	"github.com/huypher/utils/container"
+	"github.com/huypher/kit/container"
 
 	"gorm.io/gorm"
 
-	tam "github.com/pghuy/talent-acquisition-management"
+	tam "github.com/huypher/talent-acquisition-management"
 
-	"github.com/pghuy/talent-acquisition-management/domain"
+	"github.com/huypher/talent-acquisition-management/domain"
 )
 
 type talent struct {

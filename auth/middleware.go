@@ -5,7 +5,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/pghuy/talent-acquisition-management/pkg/http_response"
+	"github.com/huypher/kit/http_response"
+
 	"github.com/sirupsen/logrus"
 
 	"github.com/dgrijalva/jwt-go"

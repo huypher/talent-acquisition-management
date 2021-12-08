@@ -4,8 +4,8 @@ import (
 	"net/http"
 
 	healthcheck "github.com/RaMin0/gin-health-check"
-	"github.com/pghuy/talent-acquisition-management/auth"
-	"github.com/pghuy/talent-acquisition-management/domain"
+	"github.com/huypher/talent-acquisition-management/auth"
+	"github.com/huypher/talent-acquisition-management/domain"
 	"github.com/sirupsen/logrus"
 	ginlogrus "github.com/toorop/gin-logrus"
 

@@ -2,9 +2,9 @@ package talent
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/huypher/utils/container"
-	"github.com/huypher/utils/http_response"
-	"github.com/huypher/utils/transformer"
+	"github.com/huypher/kit/container"
+	"github.com/huypher/kit/http_response"
+	"github.com/huypher/kit/utils"
 )
 
 func (d *talentDelivery) getTalentList() gin.HandlerFunc {
@@ -16,7 +16,7 @@ func (d *talentDelivery) getTalentList() gin.HandlerFunc {
 			return
 		}
 
-		params := transformer.FlattenStructToContainerMap(&getTalentList)
+		params := utils.FlattenStructToContainerMap(&getTalentList)
 		filter := params.Exclude([]string{"page_id", "per_page"})
 
 		pageID := getTalentList.PageID

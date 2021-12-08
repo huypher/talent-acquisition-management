@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/gin-gonic/gin"
-	tam "github.com/pghuy/talent-acquisition-management"
+	tam "github.com/huypher/talent-acquisition-management"
 )
 
 type Level struct {

@@ -1,4 +1,4 @@
-module github.com/pghuy/talent-acquisition-management
+module github.com/huypher/talent-acquisition-management
 
 go 1.14
 
@@ -15,7 +15,7 @@ require (
 	github.com/google/uuid v1.2.0
 	github.com/google/wire v0.5.0
 	github.com/gorilla/mux v1.7.3 // indirect
-	github.com/huypher/utils v0.0.0-20211207125021-6b088ee7d080 // indirect
+	github.com/huypher/kit v1.7.4-0.20211208013156-a26dfa20e8a8
 	github.com/jackc/pgx/v4 v4.14.1
 	github.com/jinzhu/now v1.1.4 // indirect
 	github.com/json-iterator/go v1.1.11 // indirect
@@ -31,7 +31,6 @@ require (
 	github.com/stretchr/testify v1.7.0
 	github.com/toorop/gin-logrus v0.0.0-20210225092905-2c785434f26f
 	github.com/ugorji/go v1.2.6 // indirect
-	github.com/uptrace/bun v0.1.16
 	golang.org/x/crypto v0.0.0-20211202192323-5770296d904e
 	gorm.io/driver/postgres v1.2.3
 	gorm.io/gorm v1.22.4

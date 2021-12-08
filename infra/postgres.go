@@ -1,8 +1,8 @@
 package infra
 
 import (
+	migration "github.com/huypher/talent-acquisition-management/db"
 	_ "github.com/jackc/pgx/v4/stdlib"
-	migration "github.com/pghuy/talent-acquisition-management/db"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
