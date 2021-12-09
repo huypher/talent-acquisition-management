@@ -2,7 +2,7 @@ CREATE TABLE talents (
     id bigserial PRIMARY KEY,
     full_name varchar NOT NULL,
     gender varchar,
-    year_of_bith varchar,
+    year_of_birth integer ,
     phone varchar,
     email varchar,
     applied_position varchar,
@@ -28,4 +28,9 @@ CREATE TABLE levels (
     id bigserial PRIMARY KEY,
     code varchar NOT NULL,
     name varchar NOT NULL
-)
+);
+
+INSERT INTO levels (code, name) VALUES ('Junior', 'Junior');
+INSERT INTO levels (code, name) VALUES ('Middle', 'Middle');
+INSERT INTO levels (code, name) VALUES ('Senior', 'Senior');
+INSERT INTO levels (code, name) VALUES ('TechLead', 'Tech Lead');

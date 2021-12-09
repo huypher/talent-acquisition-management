@@ -8,8 +8,7 @@ import (
 )
 
 const (
-	loginPath    = "/login"
-	userInfoPath = "/talent"
+	loginPath = "/login"
 )
 
 type authDelivery struct {

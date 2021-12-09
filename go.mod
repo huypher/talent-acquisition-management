@@ -15,7 +15,7 @@ require (
 	github.com/google/uuid v1.2.0
 	github.com/google/wire v0.5.0
 	github.com/gorilla/mux v1.7.3 // indirect
-	github.com/huypher/kit v1.7.4-0.20211208013156-a26dfa20e8a8
+	github.com/huypher/kit v1.7.4-0.20211208093341-c2d313950d38
 	github.com/jackc/pgx/v4 v4.14.1
 	github.com/jinzhu/now v1.1.4 // indirect
 	github.com/json-iterator/go v1.1.11 // indirect

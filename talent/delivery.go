@@ -19,4 +19,5 @@ func NewTalentDelivery(userUsecase domain.TalentUsecase) *talentDelivery {
 
 func (d *talentDelivery) Handler(c *gin.RouterGroup) {
 	c.Handle(http.MethodGet, "/talents", d.getTalentList())
+	c.Handle(http.MethodPost, "/talent", d.addTalent())
 }

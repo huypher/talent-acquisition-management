@@ -26,7 +26,7 @@ func Test_genJWT(t *testing.T) {
 		err  error
 	}{
 		{"test", acc, nil},
-		{"test", nil, errors.New("talent empty")},
+		{"test", nil, errors.New("user empty")},
 	}
 	for _, testCase := range testCases {
 		tc := testCase
@@ -52,8 +52,8 @@ func Test_genHash(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name:    "",
-			args:    args{[]byte("huy")},
+			name:    "test",
+			args:    args{[]byte("test")},
 			want:    "",
 			wantErr: false,
 		},

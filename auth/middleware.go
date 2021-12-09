@@ -39,7 +39,7 @@ func Middleware() gin.HandlerFunc {
 		tokenString := strings.Replace(header.Authorization, "Bearer ", "", -1)
 
 		if tokenString == "" {
-			http_response.Abort(c, err)
+			http_response.Abort(c, http_response.NewErrUnauthorized("not authorized"))
 			return
 		}
 
@@ -49,7 +49,7 @@ func Middleware() gin.HandlerFunc {
 			return
 		}
 		if token == nil {
-			http_response.Abort(c, err)
+			http_response.Abort(c, http_response.NewErrUnauthorized("not authorized"))
 			return
 		}
 

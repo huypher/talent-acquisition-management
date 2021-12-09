@@ -51,7 +51,7 @@ func (u *authUsecase) Login(ctx context.Context, username string, password strin
 
 func genJWT(acc *domain.User, secretJWT string) (string, error) {
 	if acc == nil {
-		return "", errors.New("talent empty")
+		return "", errors.New("user empty")
 	}
 
 	claims := jwt.MapClaims{}

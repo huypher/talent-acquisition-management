@@ -11,8 +11,6 @@ import (
 )
 
 type level struct {
-	gorm.Model `bun:"levels"`
-
 	ID   int
 	Code tam.LevelType
 	Name string

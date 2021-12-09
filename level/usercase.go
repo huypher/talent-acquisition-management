@@ -16,6 +16,6 @@ func NewLevelUsecase(levelRepository domain.LevelRepository) *levelUsecase {
 	}
 }
 
-func (u *levelUsecase) GetAll(context context.Context) ([]domain.Level, error) {
-	return u.levelRepository.GetAll(context)
+func (u *levelUsecase) GetAll(ctx context.Context) ([]domain.Level, error) {
+	return u.levelRepository.GetAll(ctx)
 }

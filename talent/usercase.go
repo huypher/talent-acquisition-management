@@ -25,3 +25,7 @@ func (u *talentUsecase) GetByID(ctx context.Context, id int) (*domain.Talent, er
 func (u *talentUsecase) GetList(ctx context.Context, filter container.Map, pageID, perPage int) ([]domain.Talent, error) {
 	return u.talentRepository.GetList(ctx, filter, pageID, perPage)
 }
+
+func (u *talentUsecase) AddTalent(ctx context.Context, talent domain.Talent) error {
+	return u.talentRepository.Create(ctx, talent)
+}

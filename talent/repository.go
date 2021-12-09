@@ -3,24 +3,20 @@ package talent
 import (
 	"context"
 	"errors"
+	"fmt"
 	"time"
 
 	"github.com/huypher/kit/container"
-
-	"gorm.io/gorm"
-
 	tam "github.com/huypher/talent-acquisition-management"
-
 	"github.com/huypher/talent-acquisition-management/domain"
+	"gorm.io/gorm"
 )
 
 type talent struct {
-	gorm.Model `bun:"talents"`
-
 	ID                 int
 	FullName           string
 	Gender             string
-	YearOfBirth        string
+	YearOfBirth        int
 	Phone              string
 	Email              string
 	AppliedPosition    string
@@ -56,6 +52,27 @@ func (t talent) ToModel() domain.Talent {
 	}
 }
 
+func ToEntity(model domain.Talent) talent {
+	return talent{
+		ID:                 model.ID,
+		FullName:           model.FullName,
+		Gender:             model.Gender,
+		YearOfBirth:        model.YearOfBirth,
+		Phone:              model.Phone,
+		Email:              model.Email,
+		AppliedPosition:    model.AppliedPosition,
+		Level:              model.Level,
+		Department:         model.Department,
+		Project:            model.Project,
+		CV:                 model.CV,
+		Criteria:           model.Criteria,
+		ScheduledInterview: model.ScheduledInterview,
+		InterviewResult:    model.InterviewResult,
+		CreatedAt:          model.CreatedAt,
+		UpdatedAt:          model.UpdatedAt,
+	}
+}
+
 type talentRepository struct {
 	db *gorm.DB
 }
@@ -67,41 +84,56 @@ func NewTalentRepository(db *gorm.DB) (*talentRepository, error) {
 }
 
 func (r *talentRepository) GetByID(ctx context.Context, id int) (*domain.Talent, error) {
-	m := talent{}
+	entity := talent{}
 
-	if err := r.db.WithContext(ctx).First(&m, id).Error; err != nil {
+	if err := r.db.WithContext(ctx).First(&entity, id).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, nil
 		}
 		return nil, err
 	}
 
-	talent := m.ToModel()
+	talent := entity.ToModel()
 
 	return &talent, nil
 }
 
 func (r *talentRepository) GetList(ctx context.Context, filter container.Map, pageID, perPage int) ([]domain.Talent, error) {
-	var m []talent
+	var entity []talent
 
-	q := r.db.Where(map[string]interface{}(filter))
+	q := r.db.WithContext(ctx)
+	if !filter.IsEmpty() {
+		q = r.db.Where(map[string]interface{}(filter))
+	}
 
 	if pageID > 0 && perPage > 0 {
 		offset := perPage * (pageID - 1)
 		q = q.Offset(offset).Limit(perPage)
 	}
 
-	if err := q.WithContext(ctx).Find(&m).Error; err != nil {
+	q.Order("id DESC")
+
+	if err := q.Find(&entity).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, nil
 		}
 		return nil, err
 	}
-
-	talents := make([]domain.Talent, len(m))
-	for idx, t := range m {
+	fmt.Printf("entity=%v\n", entity)
+	talents := make([]domain.Talent, len(entity))
+	for idx, t := range entity {
 		talents[idx] = t.ToModel()
 	}
 
 	return talents, nil
+}
+
+func (r *talentRepository) Create(ctx context.Context, model domain.Talent) error {
+	entity := ToEntity(model)
+
+	if err := r.db.WithContext(ctx).Create(&entity).Error; err != nil {
+		return err
+	}
+
+	return nil
 }
