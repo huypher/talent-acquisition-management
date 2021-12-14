@@ -25,8 +25,9 @@ func ProvidePostgres(cfg *infra.Config) (*gorm.DB, func(), error) {
 func ProvideHttpHandler(
 	authDelivery domain.AuthDelivery,
 	talentDelivery domain.TalentDelivery,
+	userDelivery domain.UserDelivery,
 ) http.Handler {
-	return infra.NewHttpHandler(authDelivery, talentDelivery)
+	return infra.NewHttpHandler(authDelivery, talentDelivery, userDelivery)
 }
 
 func ProvideRestService(httpHandler http.Handler) *http.Server {

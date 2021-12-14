@@ -13,12 +13,12 @@ type getTalentListRequest struct {
 }
 
 type addTalentRequest struct {
-	FullName           string        `json:"full_name"`
+	FullName           string        `json:"full_name" binding:"required"`
 	Gender             string        `json:"gender"`
-	YearOfBirth        int           `json:"year_of_birth"`
+	Birthdate          string        `json:"birthdate"`
 	Phone              string        `json:"phone"`
 	Email              string        `json:"email"`
-	AppliedPosition    string        `json:"applied_position"`
+	AppliedPosition    string        `json:"applied_position" binding:"required"`
 	Level              tam.LevelType `json:"level"`
 	Department         string        `json:"department"`
 	Project            string        `json:"project"`
@@ -26,4 +26,20 @@ type addTalentRequest struct {
 	Criteria           string        `json:"criteria"`
 	ScheduledInterview time.Time     `json:"scheduled_interview"`
 	InterviewResult    string        `json:"interview_result"`
+}
+
+type updateTalentRequest struct {
+	FullName           string        `json:"full_name" keyname:"full_name"`
+	Gender             string        `json:"gender" keyname:"gender"`
+	Birthdate          string        `json:"birthdate" keyname:"birthdate"`
+	Phone              string        `json:"phone" keyname:"phone"`
+	Email              string        `json:"email" keyname:"email"`
+	AppliedPosition    string        `json:"applied_position" keyname:"applied_position" binding:"required"`
+	Level              tam.LevelType `json:"level" keyname:"level"`
+	Department         string        `json:"department" keyname:"department"`
+	Project            string        `json:"project" keyname:"project"`
+	CV                 string        `json:"cv" keyname:"cv"`
+	Criteria           string        `json:"criteria" keyname:"criteria"`
+	ScheduledInterview time.Time     `json:"scheduled_interview" keyname:"scheduled_interview"`
+	InterviewResult    string        `json:"interview_result" keyname:"interview_result"`
 }

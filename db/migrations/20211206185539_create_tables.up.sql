@@ -2,7 +2,7 @@ CREATE TABLE talents (
     id bigserial PRIMARY KEY,
     full_name varchar NOT NULL,
     gender varchar,
-    year_of_birth integer ,
+    birthdate varchar,
     phone varchar,
     email varchar,
     applied_position varchar,
@@ -12,6 +12,7 @@ CREATE TABLE talents (
     cv varchar,
     criteria varchar,
     scheduled_interview timestamp with time zone,
+    interviewer varchar,
     interview_result varchar,
     created_at timestamp with time zone,
     updated_at timestamp with time zone

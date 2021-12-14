@@ -15,6 +15,7 @@ import (
 func NewHttpHandler(
 	authDelivery domain.AuthDelivery,
 	talentDelivery domain.TalentDelivery,
+	userDelivery domain.UserDelivery,
 ) http.Handler {
 	router := gin.Default()
 
@@ -27,6 +28,7 @@ func NewHttpHandler(
 	{
 		authDelivery.Handler(v1)
 		v1.Use(auth.Middleware())
+		userDelivery.Handler(v1)
 		talentDelivery.Handler(v1)
 	}
 

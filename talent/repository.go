@@ -3,7 +3,6 @@ package talent
 import (
 	"context"
 	"errors"
-	"fmt"
 	"time"
 
 	"github.com/huypher/kit/container"
@@ -16,7 +15,7 @@ type talent struct {
 	ID                 int
 	FullName           string
 	Gender             string
-	YearOfBirth        int
+	Birthdate          string
 	Phone              string
 	Email              string
 	AppliedPosition    string
@@ -26,7 +25,9 @@ type talent struct {
 	CV                 string
 	Criteria           string
 	ScheduledInterview time.Time
+	Interviewer        string
 	InterviewResult    string
+	Note               string
 	CreatedAt          time.Time
 	UpdatedAt          time.Time
 }
@@ -36,7 +37,7 @@ func (t talent) ToModel() domain.Talent {
 		ID:                 t.ID,
 		FullName:           t.FullName,
 		Gender:             t.Gender,
-		YearOfBirth:        t.YearOfBirth,
+		Birthdate:          t.Birthdate,
 		Phone:              t.Phone,
 		Email:              t.Email,
 		AppliedPosition:    t.AppliedPosition,
@@ -46,7 +47,9 @@ func (t talent) ToModel() domain.Talent {
 		CV:                 t.CV,
 		Criteria:           t.Criteria,
 		ScheduledInterview: t.ScheduledInterview,
+		Interviewer:        t.Interviewer,
 		InterviewResult:    t.InterviewResult,
+		Note:               t.Note,
 		CreatedAt:          t.CreatedAt,
 		UpdatedAt:          t.UpdatedAt,
 	}
@@ -57,7 +60,7 @@ func ToEntity(model domain.Talent) talent {
 		ID:                 model.ID,
 		FullName:           model.FullName,
 		Gender:             model.Gender,
-		YearOfBirth:        model.YearOfBirth,
+		Birthdate:          model.Birthdate,
 		Phone:              model.Phone,
 		Email:              model.Email,
 		AppliedPosition:    model.AppliedPosition,
@@ -67,7 +70,9 @@ func ToEntity(model domain.Talent) talent {
 		CV:                 model.CV,
 		Criteria:           model.Criteria,
 		ScheduledInterview: model.ScheduledInterview,
+		Interviewer:        model.Interviewer,
 		InterviewResult:    model.InterviewResult,
+		Note:               model.Note,
 		CreatedAt:          model.CreatedAt,
 		UpdatedAt:          model.UpdatedAt,
 	}
@@ -119,7 +124,7 @@ func (r *talentRepository) GetList(ctx context.Context, filter container.Map, pa
 		}
 		return nil, err
 	}
-	fmt.Printf("entity=%v\n", entity)
+
 	talents := make([]domain.Talent, len(entity))
 	for idx, t := range entity {
 		talents[idx] = t.ToModel()
@@ -132,6 +137,17 @@ func (r *talentRepository) Create(ctx context.Context, model domain.Talent) erro
 	entity := ToEntity(model)
 
 	if err := r.db.WithContext(ctx).Create(&entity).Error; err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (r *talentRepository) Update(ctx context.Context, talentID int, params container.Map) error {
+	if err := r.db.WithContext(ctx).Table("talents").Where("id = ?", talentID).Updates(params).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil
+		}
 		return err
 	}
 

@@ -36,7 +36,8 @@ func InitApplication(ctx context.Context) (*App, func(), error) {
 	}
 	talentUsecase := ProvideTalentUsecase(talentRepository)
 	talentDelivery := ProvideTalentDelivery(talentUsecase)
-	handler := ProvideHttpHandler(authDelivery, talentDelivery)
+	userDelivery := ProvideUserDelivery(userUsecase)
+	handler := ProvideHttpHandler(authDelivery, talentDelivery, userDelivery)
 	server := ProvideRestService(handler)
 	app := &App{
 		server: server,

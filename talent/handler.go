@@ -1,6 +1,9 @@
 package talent
 
 import (
+	"errors"
+	"strconv"
+
 	"github.com/gin-gonic/gin"
 	"github.com/huypher/kit/container"
 	"github.com/huypher/kit/http_response"
@@ -48,7 +51,7 @@ func (d *talentDelivery) addTalent() gin.HandlerFunc {
 		model := domain.Talent{
 			FullName:           r.FullName,
 			Gender:             r.Gender,
-			YearOfBirth:        r.YearOfBirth,
+			Birthdate:          r.Birthdate,
 			Phone:              r.Phone,
 			Email:              r.Email,
 			AppliedPosition:    r.AppliedPosition,
@@ -65,6 +68,50 @@ func (d *talentDelivery) addTalent() gin.HandlerFunc {
 		if err != nil {
 			http_response.Error(c, err)
 			return
+		}
+
+		http_response.Success(c, "success", nil)
+	}
+}
+
+func (d *talentDelivery) updateTalent() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var r updateTalentRequest
+
+		talentIDInput := c.Param("talent_id")
+		if talentIDInput == "" {
+			http_response.BadRequest(c, "invalid request", nil)
+			return
+		}
+
+		talentID, err := strconv.Atoi(talentIDInput)
+		if err != nil {
+			http_response.BadRequest(c, err.Error(), nil)
+			return
+		}
+		if talentID <= 0 {
+			http_response.BadRequest(c, "invalid request", nil)
+			return
+		}
+
+		if err := c.ShouldBindJSON(&r); err != nil {
+			http_response.BadRequest(c, err.Error(), nil)
+			return
+		}
+
+		params := utils.FlattenStructToContainerMap(&r)
+
+		err = d.talentUsecase.UpdateTalent(c, talentID, params)
+		if err != nil {
+			var errTalentNotfound *ErrTalentNotFound
+			switch {
+			case errors.As(err, &errTalentNotfound):
+				http_response.BadRequest(c, err.Error(), nil)
+				return
+			default:
+				http_response.Error(c, err)
+				return
+			}
 		}
 
 		http_response.Success(c, "success", nil)
